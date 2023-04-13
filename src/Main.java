@@ -57,18 +57,24 @@ public class Main {
                     if(m[i].equals("Delete"))
                         cnt += 1;
                 }
-                for (int i = 0; i<cnt; i++){
-                    l.toFront();
+                for (int i = 0; i < cnt; i++){
                     try {
                         l.erase();
-                    }catch (Exception e){;}
+                    }catch (Exception e){
+                        l.toFront();
+                    }
                 }
                 if (l.empty())
                     System.out.println("Нет открытых приложений");
-                else System.out.println(l.after());
+                else{
+                    l.toFront();
+                    System.out.println(l.after());
+                }
             }
+            else if (s.equals("end")) break;
             else
                 System.out.println("Введена неверная команда, проигнорировать");
+
         }
     }
 }
