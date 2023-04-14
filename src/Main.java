@@ -27,13 +27,13 @@ public class Main {
                         }
                     }
                     else if (m[i].equals("Tab")){
-//                        int c = 0;
-//                        for (int j = 0; j < m.length; j++) {
-//                            if (m[i].equals("Tab")) {
-//                                c++;
-//                            }
-//                        }
-//                        for (int j = 0; j < c; j++){
+                        int c = 0;
+                        for (int j = 0; j < m.length; j++) {
+                            if (m[i].equals("Tab")) {
+                                c++;
+                            }
+                        }
+                        for (int j = 0; j < c; j++){
                             try {
                                 l.forward();
                             }catch (Exception e){
@@ -46,7 +46,7 @@ public class Main {
                             }catch (Exception e){
                                 l.toFront();
                             }
-                        //}
+                        }
                     }
                 }
             }
