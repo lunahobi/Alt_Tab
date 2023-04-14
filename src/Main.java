@@ -4,77 +4,60 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Pattern run = Pattern.compile("Run" + ".+");
-        Pattern alt_tab = Pattern.compile("Alt\\+Tab" + ".*");
-        Pattern alt_del = Pattern.compile("Alt\\+Delete" + ".*");
+//        Pattern run = Pattern.compile("Run" + ".+");
+//        Pattern alt_tab = Pattern.compile("Alt\\+Tab" + ".*");
+//        Pattern alt_del = Pattern.compile("Alt\\+Delete" + ".*");
         L1List l = new L1List();
         Scanner in = new Scanner(System.in);
-        while (true){
+        while (in.hasNextLine()){
             String s = in.nextLine();
-            Matcher matcher = run.matcher(s);
-            Matcher matcher1 = alt_tab.matcher(s);
-            Matcher matcher2 = alt_del.matcher(s);
-            if (matcher.find()){
-                String p = s.split("Run")[1].trim();
+            if (s.equals("end")) break;
+            if (s.startsWith("Run")){
+                String p = s.replaceAll("Run", "").trim();
                 l.insert(p);
-                System.out.println(p);
             }
-            else if (matcher1.find()){
-                int cnt = 0;
+            else if (s.startsWith("Alt")){
                 String[] m = s.split("\\+");
                 for (int i = 0; i < m.length; i++){
-                    if(m[i].equals("Tab"))
-                        cnt += 1;
-                }
-                for (int i = 0; i < cnt; i++){
-                    try {
-                        l.forward();
-                    }catch (Exception e){
-                        l.toFront();
+                    if (m[i].equals("Delete")){
+                        try {
+                            l.erase();
+                        }catch (Exception e){
+                            l.toFront();
+                        }
                     }
-                    try {
-                        String e = l.after();
-                        l.erase();
-                        l.insert(e);
-                    }catch (Exception e){
-                        l.toFront();
+                    else if (m[i].equals("Tab")){
+//                        int c = 0;
+//                        for (int j = 0; j < m.length; j++) {
+//                            if (m[i].equals("Tab")) {
+//                                c++;
+//                            }
+//                        }
+//                        for (int j = 0; j < c; j++){
+                            try {
+                                l.forward();
+                            }catch (Exception e){
+                                l.toFront();
+                            }
+                            try {
+                                String p = l.after();
+                                l.erase();
+                                l.insert(p);
+                            }catch (Exception e){
+                                l.toFront();
+                            }
+                        //}
                     }
-                }
-                if (l.empty())
-                    System.out.println("Нет открытых приложений");
-                else if (!l.empty())
-                    try {
-                        System.out.println(l.after());
-                    }catch (Exception e){
-                        l.toFront();
-                        System.out.println(l.after());
-                    }
-            }
-            else if(matcher2.find()){
-                int cnt = 0;
-                String[] m = s.split("\\+");
-                for (int i = 0; i < m.length; i++){
-                    if(m[i].equals("Delete"))
-                        cnt += 1;
-                }
-                for (int i = 0; i < cnt; i++){
-                    try {
-                        l.erase();
-                    }catch (Exception e){
-                        l.toFront();
-                    }
-                }
-                if (l.empty())
-                    System.out.println("Нет открытых приложений");
-                else{
-                    l.toFront();
-                    System.out.println(l.after());
                 }
             }
-            else if (s.equals("end")) break;
+            else{
+                System.out.println("Введена неправильная команда");
+                continue;
+            }
+            if (!l.empty())
+                System.out.println(l.after());
             else
-                System.out.println("Введена неверная команда, проигнорировать");
-
+                System.out.println("Нет открытых приложений");
         }
     }
 }
