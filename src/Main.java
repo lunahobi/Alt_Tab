@@ -12,7 +12,8 @@ public class Main {
                 String p = s.replaceAll("Run", "").trim();
                 l.insert(p);
                 count++;
-            } else if (s.startsWith("Alt")) {
+            }
+            else if (s.startsWith("Alt")) {
                 if (s.split("\\+")[1].equals("Tab")) {
                     int c = s.split("\\+").length - 1;
                     for (int k = 0; k < c; k++) {
@@ -22,6 +23,11 @@ public class Main {
                             l.toFront();
                         }
                     }
+                    try{
+                        l.after();
+                    }catch (Exception e){
+                        l.toFront();
+                    }
                     String p = l.after();
                     l.erase();
                     l.toFront();
@@ -29,7 +35,7 @@ public class Main {
                         for (int j = 0; j < (count - i); j++) {
                             try {
                                 l.forward();
-                            } catch (Exception ex) {
+                            } catch (Exception e) {
                                 l.toFront();
                             }
                         }
@@ -38,9 +44,10 @@ public class Main {
                         } catch (Exception ex) {
                             l.toFront();
                         }
-                        s = l.after();
+                        String s1 = l.after();
+                        //System.out.println(s);
                         l.erase();
-                        l.insert(s);
+                        l.insert(s1);
                         l.toFront();
                     }
                     l.insert(p);
@@ -53,7 +60,8 @@ public class Main {
                         } catch (Exception e) {;}
                     }
                 }
-            } else {
+            }
+            else {
                 System.out.println("Введена неправильная команда");
                 continue;
             }
